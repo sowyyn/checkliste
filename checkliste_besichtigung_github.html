@@ -1,0 +1,185 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{
+  --paper:#FBFAF7; --sheet:#FFFFFF; --ink:#1A1C19; --muted:#6E7069;
+  --line:#D8D7CF; --rule:#EDECE6; --accent:#2B4C6F;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  font-size:16px;line-height:1.45;-webkit-text-size-adjust:100%}
+.wrap{max-width:640px;margin:0 auto;padding:20px 16px 64px}
+h1{font-size:20px;font-weight:600;margin:0 0 3px;letter-spacing:-.01em}
+.sub{color:var(--muted);font-size:13.5px;margin:0 0 14px}
+.status{position:sticky;top:0;background:var(--paper);z-index:5;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:8px 0;border-bottom:1px solid var(--line);margin-bottom:14px;font-size:13px;color:var(--muted)}
+.status .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#8A6420;margin-right:6px;vertical-align:middle}
+.status.ok .dot{background:#2B6F4C}
+.status button{border:1px solid var(--line);background:var(--sheet);color:var(--ink);
+  padding:5px 10px;font-size:12.5px;font-family:inherit}
+h2{font-size:15px;font-weight:600;margin:26px 0 10px;padding-bottom:6px;
+   border-bottom:1px solid var(--line)}
+.addr{border:1px solid var(--line);background:var(--sheet);padding:10px 12px;
+   font-size:14px;margin-bottom:6px}
+.row{display:flex;align-items:flex-start;gap:10px;padding:8px 2px;border-bottom:1px solid var(--rule)}
+.row:last-child{border-bottom:none}
+.row input[type=checkbox]{width:19px;height:19px;flex:0 0 19px;margin-top:2px;accent-color:var(--accent)}
+.row label{flex:1;font-size:14.5px}
+.row .pct{color:var(--muted);font-size:13px;white-space:nowrap;padding-left:6px}
+.qrow{padding:9px 2px;border-bottom:1px solid var(--rule)}
+.qrow:last-child{border-bottom:none}
+.qrow .q{font-size:14.5px;display:block;margin-bottom:5px}
+.qrow input[type=text]{width:100%;padding:7px 8px;border:1px solid var(--line);
+  background:var(--sheet);color:var(--ink);font-size:14.5px;font-family:inherit}
+.two{display:flex;gap:8px}
+.two input{flex:1;min-width:0}
+.note{font-size:12.5px;color:var(--muted);margin-top:3px}
+textarea{width:100%;min-height:90px;padding:8px;border:1px solid var(--line);
+  background:var(--sheet);color:var(--ink);font-size:14.5px;font-family:inherit;resize:vertical}
+.foot{margin-top:24px;font-size:12.5px;color:var(--muted)}
+@media print{
+  .status{display:none}
+  body{background:#fff}
+  .row input[type=checkbox]{-webkit-appearance:none;appearance:none;width:16px;height:16px;
+    border:1.3px solid #333}
+}
+@media (prefers-color-scheme:dark){
+  :root{--paper:#17181A;--sheet:#1F2022;--ink:#E8E7E2;--muted:#9A9A93;--line:#3A3B3C;--rule:#2A2B2C}
+}
+</style>
+
+<div class="wrap">
+<div class="status" id="status"><span><span class="dot"></span><span id="statusText">Wird geladen …</span></span><button id="clearBtn">Zurücksetzen</button></div>
+
+<h1>Besichtigung Am Dobben 109</h1>
+<p class="sub">Fesenfeld, zweiter Stock · Robert und Frau Bücking · Sonntag 16:00 Uhr</p>
+
+<div class="addr">Kaltmiete lt. E-Mail 1.150 € · Gas-Zentralheizung · Nebenkostenübersicht steht noch aus</div>
+
+<h2>Basisdaten für den Mietspiegel</h2>
+<div class="qrow"><span class="q">Baujahr</span><input type="text" name="baujahr" placeholder="z. B. 1905 oder Zeitraum"></div>
+<div class="qrow"><span class="q">Wohnfläche laut Vermieter</span><input type="text" name="flaeche_vermieter" placeholder="m²"></div>
+<div class="qrow"><span class="q">Anzahl Geschosse im Haus (für Aufzugs-Zuschlag)</span><input type="text" name="geschosse"></div>
+
+<h2>Wohnfläche selbst gemessen</h2>
+<div class="qrow"><span class="q">Zimmer 1</span><div class="two"><input type="text" name="z1_b" placeholder="Breite m"><input type="text" name="z1_l" placeholder="Länge m"></div></div>
+<div class="qrow"><span class="q">Zimmer 2</span><div class="two"><input type="text" name="z2_b" placeholder="Breite m"><input type="text" name="z2_l" placeholder="Länge m"></div></div>
+<div class="qrow"><span class="q">Zimmer 3</span><div class="two"><input type="text" name="z3_b" placeholder="Breite m"><input type="text" name="z3_l" placeholder="Länge m"></div></div>
+<div class="qrow"><span class="q">Küche</span><div class="two"><input type="text" name="kueche_b" placeholder="Breite m"><input type="text" name="kueche_l" placeholder="Länge m"></div></div>
+<div class="qrow"><span class="q">Bad</span><div class="two"><input type="text" name="bad_b" placeholder="Breite m"><input type="text" name="bad_l" placeholder="Länge m"></div></div>
+<div class="qrow"><span class="q">Flur</span><div class="two"><input type="text" name="flur_b" placeholder="Breite m"><input type="text" name="flur_l" placeholder="Länge m"></div></div>
+<div class="qrow"><span class="q">Balkon / Terrasse</span><div class="two"><input type="text" name="balkon_b" placeholder="Breite m"><input type="text" name="balkon_l" placeholder="Länge m"></div>
+<p class="note">Zählt nur zu 25 oder 50 % je nach Qualität</p></div>
+<div class="qrow"><span class="q">Raumhöhe, mindestens ein Wert</span><input type="text" name="raumhoehe" placeholder="m"></div>
+
+<h2>Art des Gebäudes / der Wohnung</h2>
+<div class="row"><input type="checkbox" id="c1" name="c1"><label for="c1">Maisonette / Galerie, eigene Treppe in der Wohnung</label><span class="pct">+3,6 %</span></div>
+
+<h2>Bad und Küche</h2>
+<div class="row"><input type="checkbox" id="c2" name="c2"><label for="c2">Badewanne vorhanden</label></div>
+<div class="row"><input type="checkbox" id="c3" name="c3"><label for="c3">Dusche mit eigener Duschtasse</label><span class="pct">+4,2 %</span></div>
+<div class="row"><input type="checkbox" id="c4" name="c4"><label for="c4">Wandhängendes WC</label><span class="pct">+2,3 %</span></div>
+<div class="row"><input type="checkbox" id="c5" name="c5"><label for="c5">Fußbodenheizung im Bad</label><span class="pct">+8,8 %</span></div>
+<div class="row"><input type="checkbox" id="c6" name="c6"><label for="c6">Zweites Bad vorhanden</label><span class="pct">+8,8 %</span></div>
+<div class="row"><input type="checkbox" id="c7" name="c7"><label for="c7">Wohnküche, großer Raum mit Essplatz</label><span class="pct">+2,6 %</span></div>
+<div class="row"><input type="checkbox" id="c8" name="c8"><label for="c8">Einbauküche vorhanden, gehört zur Mietsache</label></div>
+<div class="row"><input type="checkbox" id="c9" name="c9"><label for="c9">davon: mit Kühlschrank UND Herd/Backofen, ohne Gefrierfach/Spüler</label><span class="pct">+6,5 %</span></div>
+<div class="row"><input type="checkbox" id="c10" name="c10"><label for="c10">davon: zusätzlich mit Gefrierfach und Spülmaschine</label><span class="pct">+8,4 %</span></div>
+
+<h2>Außenflächen</h2>
+<div class="row"><input type="checkbox" id="c11" name="c11"><label for="c11">Balkon oder Loggia zur alleinigen Nutzung</label><span class="pct">+1,6 %</span></div>
+<div class="row"><input type="checkbox" id="c12" name="c12"><label for="c12">Ebenerdige Terrasse zur alleinigen Nutzung</label><span class="pct">+5,0 %</span></div>
+<div class="row"><input type="checkbox" id="c13" name="c13"><label for="c13">Dachterrasse zur alleinigen Nutzung</label><span class="pct">+5,4 %</span></div>
+
+<h2>Bodenbeläge Wohn- und Schlafräume</h2>
+<div class="row"><input type="checkbox" id="c14" name="c14"><label for="c14">Einfaches PVC</label><span class="pct">+1,4 %</span></div>
+<div class="row"><input type="checkbox" id="c15" name="c15"><label for="c15">Teppichboden</label><span class="pct">+2,4 %</span></div>
+<div class="row"><input type="checkbox" id="c16" name="c16"><label for="c16">Laminat, einwandfrei ohne Gebrauchsspuren</label><span class="pct">+5,8 %</span></div>
+<div class="row"><input type="checkbox" id="c17" name="c17"><label for="c17">Hochwertiges PVC / Vinyl / Designboden</label><span class="pct">+6,0 %</span></div>
+<div class="row"><input type="checkbox" id="c18" name="c18"><label for="c18">Originale, nicht aufgearbeitete Dielen</label><span class="pct">+8,0 %</span></div>
+<div class="row"><input type="checkbox" id="c19" name="c19"><label for="c19">Parkett oder aufgearbeitete Dielen</label><span class="pct">+10,3 %</span></div>
+
+<h2>Verglasung, Heizung, Warmwasser</h2>
+<div class="row"><input type="checkbox" id="c20" name="c20"><label for="c20">Wärmeschutzverglasung (U-Wert 1,1–1,9 oder besser)</label><span class="pct">+1,7 %</span></div>
+<div class="row"><input type="checkbox" id="c21" name="c21"><label for="c21">Fernwärme statt Gaszentralheizung</label><span class="pct">+4,7 %</span></div>
+<div class="row"><input type="checkbox" id="c22" name="c22"><label for="c22">Wärmepumpe</label><span class="pct">+21,5 %</span></div>
+<div class="row"><input type="checkbox" id="c23" name="c23"><label for="c23">Kein fließendes Warmwasser in der Küche</label><span class="pct">−5,1 %</span></div>
+<div class="row"><input type="checkbox" id="c24" name="c24"><label for="c24">Elektro-Boiler statt zentraler Warmwasserversorgung</label><span class="pct">−4,5 %</span></div>
+
+<h2>Sonstige Ausstattung</h2>
+<div class="row"><input type="checkbox" id="c25" name="c25"><label for="c25">Aufzug vorhanden (nur bis 5 Geschosse zählbar)</label><span class="pct">+5,0 %</span></div>
+<div class="row"><input type="checkbox" id="c26" name="c26"><label for="c26">Gefangener Raum / Durchgangszimmer vorhanden</label><span class="pct">−3,0 %</span></div>
+<div class="row"><input type="checkbox" id="c27" name="c27"><label for="c27">Videogestützte Gegensprechanlage mit Türöffner</label><span class="pct">+6,3 %</span></div>
+
+<h2>Modernisierung (Baujahr vor 1985, Maßnahme ab 2012, Details siehe unten)</h2>
+<div class="row"><input type="checkbox" id="c28" name="c28"><label for="c28">Heizkessel erneuert</label><span class="pct">+1,5 %</span></div>
+<div class="row"><input type="checkbox" id="c29" name="c29"><label for="c29">Heizungsrohre / Zuleitungen erneuert</label><span class="pct">+7,4 %</span></div>
+<div class="row"><input type="checkbox" id="c30" name="c30"><label for="c30">Dämmung oberste Geschossdecke</label><span class="pct">+4,3 %</span></div>
+<div class="row"><input type="checkbox" id="c31" name="c31"><label for="c31">Dämmung aller Außenwände</label><span class="pct">+3,1 %</span></div>
+<div class="row"><input type="checkbox" id="c32" name="c32"><label for="c32">Bad erneuert (Maßnahme ab 2017)</label><span class="pct">+1,7 %</span></div>
+<div class="row"><input type="checkbox" id="c33" name="c33"><label for="c33">Elektroinstallation komplett erneuert (Maßnahme ab 2015)</label><span class="pct">+2,6 %</span></div>
+<div class="qrow"><span class="q">Jahr der letzten größeren Modernisierung, falls genannt</span><input type="text" name="mod_jahr"></div>
+
+<h2>Sonstige Beobachtungen</h2>
+<textarea name="notizen" placeholder="Feuchtigkeit, Lärm, Zustand Fenster, Stromkasten, Fluchtweg, allgemeiner Eindruck ..."></textarea>
+
+<p class="foot">Prozentsätze aus dem qualifizierten Mietspiegel 2026 der Stadtgemeinde Bremen. Die Wohnlage- und Baujahreszuschläge sind hier nicht aufgeführt, da sie automatisch aus Adresse und Baujahr im Online-Rechner folgen. Ergebnis anschließend unter inwis.de/mietspiegel-bremen eintragen.</p>
+</div>
+
+<script>
+const KEY = "checkliste_dobben109";
+
+function collect(){
+  const data = {};
+  document.querySelectorAll("[name]").forEach(el=>{
+    data[el.name] = el.type==="checkbox" ? el.checked : el.value;
+  });
+  return data;
+}
+function apply(data){
+  if(!data) return;
+  document.querySelectorAll("[name]").forEach(el=>{
+    if(!(el.name in data)) return;
+    if(el.type==="checkbox") el.checked = !!data[el.name];
+    else el.value = data[el.name];
+  });
+}
+
+const st = document.getElementById("status");
+const stText = document.getElementById("statusText");
+function setStatus(mode){
+  if(mode==="saved"){ st.classList.add("ok"); stText.textContent = "Gespeichert in diesem Browser"; }
+  else if(mode==="empty"){ st.classList.remove("ok"); stText.textContent = "Noch nichts eingetragen"; }
+  else { st.classList.remove("ok"); stText.textContent = "Speichern hier nicht möglich"; }
+}
+
+let timer=null;
+function scheduleSave(){
+  clearTimeout(timer);
+  timer = setTimeout(()=>{
+    try{
+      localStorage.setItem(KEY, JSON.stringify(collect()));
+      setStatus("saved");
+    }catch(e){ setStatus("unsupported"); }
+  }, 300);
+}
+
+document.getElementById("clearBtn").onclick = ()=>{
+  if(!confirm("Alle Eingaben auf dieser Seite löschen?")) return;
+  document.querySelectorAll("[name]").forEach(el=>{ if(el.type==="checkbox") el.checked=false; else el.value=""; });
+  try{ localStorage.removeItem(KEY); }catch(e){}
+  setStatus("empty");
+};
+
+document.querySelectorAll("[name]").forEach(el=>{
+  el.addEventListener("input", scheduleSave);
+  el.addEventListener("change", scheduleSave);
+});
+
+try{
+  const raw = localStorage.getItem(KEY);
+  if(raw){ apply(JSON.parse(raw)); setStatus("saved"); }
+  else{ setStatus("empty"); }
+}catch(e){ setStatus("unsupported"); }
+</script>
